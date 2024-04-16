@@ -32,6 +32,9 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
+                                <NavLink :href="route('films.films')" :active="route().current('films.index')">
+                                    Films
+                                </NavLink>
                             </div>
                         </div>
 

@@ -14,11 +14,11 @@ class FilmsAndActorsSeeder extends Seeder
      */
     public function run(): void
     {
-       $actors = Actor::factory()->count(10)->create();
+       $actors = Actor::factory()->count(20)->create();
 
        $actors->each(function ($actor) {
-           $films = Film::factory()->count(3)->create();
-           $actor->films()->attach($films);
+           $films = Film::factory()->count(10)->create();
+           $actor->films()->attach($films, ['role' => 'main']);
        });
     }
 }

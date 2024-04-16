@@ -7,6 +7,8 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,

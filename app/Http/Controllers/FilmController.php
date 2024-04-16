@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace App\Http\Controllers\API;
 
 use App\Models\Film;
 use Illuminate\Http\Request;
@@ -15,7 +14,8 @@ class FilmController extends Controller
     {
         $films = Film::with('actors')->get();
 
-        return Inertia::render('Films/Index', [
+
+        return Inertia::render('Films/Films', [
             'films' => $films
         ]);
     }
@@ -68,25 +68,30 @@ class FilmController extends Controller
         return redirect()->back()->with('success', 'Film created successfully');
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $filmId)
     {
-        $film = Film::find($id);
+        $film = Film::find($filmId);
 
         if (!$film) {
             abort(404, 'Film not found');
         }
 
         $requestData = $request->validate([
-            'name' => 'unique:films|max:255',
+            'name' => 'max:255',
             'actors'=> 'array',
             'actors.*' => 'exists:actors,id'
         ]);
 
-        $film->update($request->only('name'));
+
+        if ($request->has('name')) {
+            $film->name = $requestData['name'];
+        }
 
         if ($request->has('actors')) {
             $film->actors()->sync($requestData['actors']);
         }
+
+        $film->save();
 
         return redirect()->back()->with('success', 'Film updated successfully.');
 
